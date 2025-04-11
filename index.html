@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GazeDraw</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="toolbar">
+    <button data-tool="draw">✏️</button>
+    <button data-tool="erase">🧽</button>
+    <input type="color" id="colorPicker" />
+    <button id="clear">🗑️ Clear</button>
+  </div>
+
+  <canvas id="drawCanvas"></canvas>
+  <div id="gazeCursor"></div>
+
+  <script src="libs/webgazer.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

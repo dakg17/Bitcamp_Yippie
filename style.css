@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: sans-serif;
+  }
+  
+  #toolbar {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+  }
+  
+  #drawCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  #gazeCursor {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.6;
+  }
