@@ -1,0 +1,27 @@
+{
+  "name": "bitcamp-2025-hackathon-project",
+  "version": "1.0.0",
+  "description": "Bitcamp Project TBD",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dakg17/Bitcamp_Yippie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dakg17/Bitcamp_Yippie/issues"
+  },
+  "homepage": "https://github.com/dakg17/Bitcamp_Yippie#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

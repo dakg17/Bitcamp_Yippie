@@ -54,94 +54,12 @@ brushSizeSlider.addEventListener("change", (event) => {
   brushSizeDisplay.textContent = brushSize;
 });
 
-// Calibration
-// const calibrationDiv = document.getElementById("calibration");
-// const dotsDiv = document.getElementById("dots");
-
-// const dotPositions = [
-//   [10, 10], [50, 10], [90, 10],
-//   [10, 50], [50, 50], [90, 50],
-//   [10, 90], [50, 90], [90, 90],
-// ];
-// let clicks = 0;
-
-// dotPositions.forEach(([x, y]) => {
-//   const dot = document.createElement("div");
-//   dot.className = "dot";
-//   dot.style.left = `${x}vw`;
-//   dot.style.top = `${y}vh`;
-//   dot.onclick = () => {
-//     webgazer.recordScreenPosition(
-//       x * window.innerWidth / 100,
-//       y * window.innerHeight / 100,
-//       'click'
-//     );
-//     dot.remove();
-//     clicks++;
-//     if (clicks === dotPositions.length) {
-//       calibrationDiv.style.display = "none";
-//       isCalibrated = true;
-//     }
-//   };
-//   dotsDiv.appendChild(dot);
-// });
-
-// webgazer.setGazeListener((data) => {
-//   if (!data || !isCalibrated) return;
-
-//   const targetX = data.x;
-//   const targetY = data.y;
-//   ctx.lineWidth = brushSize;
-
-//   // Smooth the motion
-//   smoothedX += (targetX - smoothedX) * smoothingFactor;
-//   smoothedY += (targetY - smoothedY) * smoothingFactor;
-
-//   gazeCursor.style.left = (smoothedX - 10) + "px";
-//   gazeCursor.style.top = (smoothedY - 10) + "px";
-
-//   const now = Date.now();
-
-//   if (currentTool === "draw") {
-//     if (now - lastDrawTime > drawCooldown) {
-//       ctx.strokeStyle = brushColor;
-//       ctx.lineCap = "round";
-//       ctx.beginPath();
-//       ctx.moveTo(lastX, lastY);
-//       ctx.lineTo(smoothedX, smoothedY);
-//       ctx.stroke();
-//       lastX = smoothedX;
-//       lastY = smoothedY;
-//       lastDrawTime = now;
-//     }
-//   } else if (currentTool === "erase") {
-//     ctx.globalCompositeOperation = 'destination-out';
-//     //ctx.clearRect(smoothedX - 10, smoothedY - 10, 20, 20);
-//     ctx.strokeStyle = brushColor;
-//     ctx.lineCap = "round";
-//     ctx.beginPath();
-//     ctx.moveTo(lastX, lastY);
-//     ctx.lineTo(smoothedX, smoothedY);
-//     ctx.stroke();
-//     lastX = smoothedX;
-//     lastY = smoothedY;
-//     lastDrawTime = now;
-//     ctx.globalCompositeOperation = 'source-over';
-//   }
-// }).begin();
-
-// webgazer.showVideoPreview(true);
-// webgazer.showPredictionPoints(false);
-// webgazer.showFaceOverlay(true);
-
 function onPoint(point,calibration){
   point[0]; // x
   point[1]; // y
   calibration; // false - for calibrated data, true if calibration is ongoing
-  document.getElementById("log").textContent = calibration;
 
   if (!calibration) {
-    document.getElementById("log").textContent = "a";
     const targetX = point[0];
     const targetY = point[1];
     ctx.lineWidth = brushSize;
