@@ -3,12 +3,18 @@ const ctx = canvas.getContext("2d");
 const gazeCursor = document.getElementById("gazeCursor");
 const colorPicker = document.getElementById("colorPicker");
 const clearBtn = document.getElementById("clear");
+const brushSizeBtn = document.getElementById("brushSizeButton");
+const brushSizeContainer = document.getElementById("brushSizeContainer");
+const brushSizeSlider = document.getElementById("brushSizeSlider");
+const brushSizeDisplay = document.getElementById("brushSizeDisplay");
 
 let currentTool = "draw";
 let isDrawing = false;
 let lastX = 0, lastY = 0;
 let brushColor = "#000";
 let isCalibrated = false;
+let brushSize = 1;
+brushSizeContainer.style.display = 'none';
 
 let smoothedX = window.innerWidth / 2;
 let smoothedY = window.innerHeight / 2;
@@ -26,9 +32,20 @@ window.addEventListener("resize", resizeCanvas);
 
 colorPicker.addEventListener("change", (e) => brushColor = e.target.value);
 document.querySelectorAll("[data-tool]").forEach(btn => {
-  btn.addEventListener("click", () => currentTool = btn.dataset.tool);
+  btn.addEventListener("click", () => {
+    if (btn.id != "brushSizeButton") {
+      currentTool = btn.dataset.tool;
+    }
+  });
 });
 clearBtn.addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
+brushSizeBtn.addEventListener("click", function () {
+  toggleBrushSizeDiv()
+});
+brushSizeSlider.addEventListener("change", (event) => {
+  brushSize = event.target.value;
+  brushSizeDisplay.textContent = brushSize;
+});
 
 // Calibration
 const calibrationDiv = document.getElementById("calibration");
@@ -67,6 +84,7 @@ webgazer.setGazeListener((data) => {
 
   const targetX = data.x;
   const targetY = data.y;
+  ctx.lineWidth = brushSize;
 
   // Smooth the motion
   smoothedX += (targetX - smoothedX) * smoothingFactor;
@@ -80,7 +98,6 @@ webgazer.setGazeListener((data) => {
   if (currentTool === "draw") {
     if (now - lastDrawTime > drawCooldown) {
       ctx.strokeStyle = brushColor;
-      ctx.lineWidth = 3;
       ctx.lineCap = "round";
       ctx.beginPath();
       ctx.moveTo(lastX, lastY);
@@ -98,3 +115,15 @@ webgazer.setGazeListener((data) => {
 webgazer.showVideoPreview(true);
 webgazer.showPredictionPoints(false);
 webgazer.showFaceOverlay(true);
+
+function toggleBrushSizeDiv() {
+  if (brushSizeContainer.style.display === "block") {
+    brushSizeContainer.style.display = "none";
+  } else {
+    brushSizeContainer.style.display = "block";
+  }
+}
+
+function changeBrushSize() {
+  
+}
