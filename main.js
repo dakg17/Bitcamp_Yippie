@@ -141,16 +141,14 @@ function onPoint(point,calibration){
   document.getElementById("log").textContent = calibration;
 
   if (!calibration) {
-    const targetX = data.x;
-    const targetY = data.y;
+    document.getElementById("log").textContent = "a";
+    const targetX = point[0];
+    const targetY = point[1];
     ctx.lineWidth = brushSize;
   
     // Smooth the motion
     smoothedX += (targetX - smoothedX) * smoothingFactor;
     smoothedY += (targetY - smoothedY) * smoothingFactor;
-  
-    gazeCursor.style.left = (smoothedX - 10) + "px";
-    gazeCursor.style.top = (smoothedY - 10) + "px";
   
     const now = Date.now();
   
