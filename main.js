@@ -13,7 +13,8 @@ let isDrawing = false;
 let lastX = 0, lastY = 0;
 let brushColor = "#000";
 let isCalibrated = false;
-let brushSize = 1;
+brushSizeSlider.value = 1;
+let brushSize = brushSizeSlider.value;
 brushSizeContainer.style.display = 'none';
 
 let smoothedX = window.innerWidth / 2;
@@ -108,7 +109,18 @@ webgazer.setGazeListener((data) => {
       lastDrawTime = now;
     }
   } else if (currentTool === "erase") {
-    ctx.clearRect(smoothedX - 10, smoothedY - 10, 20, 20);
+    ctx.globalCompositeOperation = 'destination-out';
+    //ctx.clearRect(smoothedX - 10, smoothedY - 10, 20, 20);
+    ctx.strokeStyle = brushColor;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(smoothedX, smoothedY);
+    ctx.stroke();
+    lastX = smoothedX;
+    lastY = smoothedY;
+    lastDrawTime = now;
+    ctx.globalCompositeOperation = 'source-over';
   }
 }).begin();
 
