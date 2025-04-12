@@ -3,53 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <title>GazeDraw Smooth</title>
-  <style>
-    body { margin: 0; overflow: hidden; }
-    canvas { position: absolute; top: 0; left: 0; }
-    #gazeCursor {
-      width: 20px;
-      height: 20px;
-      background: red;
-      border-radius: 50%;
-      position: absolute;
-      pointer-events: none;
-      z-index: 10;
-      opacity: 0.6;
-    }
-    #toolbar {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 20;
-      background: white;
-      padding: 8px;
-      border-radius: 8px;
-    }
-    #calibration {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 999;
-    }
-    .dot {
-      width: 30px;
-      height: 30px;
-      background: red;
-      border-radius: 50%;
-      position: absolute;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://eyegestures.com/eyegestures.css">
 </head>
 <body>
+  <video id="video" width="640" height="480" autoplay></video>
+  <div id="status" style="display : none;">Initializing...</div>
+  <div id="error" style="display : none;"></div>
   <div id="toolbar">
+    <b id="log">hi</b>
     <button data-tool="draw">✏️</button>
     <button data-tool="erase">🧽</button>
     <button id="brushSizeButton">🖌️</button>
@@ -60,17 +22,14 @@
     </div>
     <input type="color" id="colorPicker" value="#000000">
     <button id="clear">🗑️ Clear</button>
+    <div id="log" style="display : none;"></div>
   </div>
 
-  <div id="gazeCursor"></div>
   <canvas id="drawCanvas"></canvas>
 
-  <div id="calibration">
-    <h2 style="color:white;">Click each red dot to calibrate your gaze</h2>
-    <div id="dots"></div>
-  </div>
-
-  <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+  <script src="https://www.lactame.com/lib/ml/6.0.0/ml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+  <script src="https://eyegestures.com/eyegestures.js"></script>
   <script src="main.js"> </script>
 </body>
 </html>

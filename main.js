@@ -7,7 +7,10 @@ const brushSizeBtn = document.getElementById("brushSizeButton");
 const brushSizeContainer = document.getElementById("brushSizeContainer");
 const brushSizeSlider = document.getElementById("brushSizeSlider");
 const brushSizeDisplay = document.getElementById("brushSizeDisplay");
+const video = document.getElementById("video");
 
+const relVideoWidth = 0.2;
+const relVideoHeight = relVideoWidth * 1.33333333;
 let currentTool = "draw";
 let isDrawing = false;
 let lastX = 0, lastY = 0;
@@ -19,6 +22,9 @@ brushSizeContainer.style.display = 'none';
 
 let smoothedX = window.innerWidth / 2;
 let smoothedY = window.innerHeight / 2;
+
+video.setAttribute('width', window.innerWidth * relVideoWidth);
+video.setAttribute('height', window.innerHeight * relVideoHeight);
 
 const smoothingFactor = 0.15; // smaller = smoother/slower
 const drawCooldown = 120; // ms between strokes
@@ -49,55 +55,119 @@ brushSizeSlider.addEventListener("change", (event) => {
 });
 
 // Calibration
-const calibrationDiv = document.getElementById("calibration");
-const dotsDiv = document.getElementById("dots");
+// const calibrationDiv = document.getElementById("calibration");
+// const dotsDiv = document.getElementById("dots");
 
-const dotPositions = [
-  [10, 10], [50, 10], [90, 10],
-  [10, 50], [50, 50], [90, 50],
-  [10, 90], [50, 90], [90, 90],
-];
-let clicks = 0;
+// const dotPositions = [
+//   [10, 10], [50, 10], [90, 10],
+//   [10, 50], [50, 50], [90, 50],
+//   [10, 90], [50, 90], [90, 90],
+// ];
+// let clicks = 0;
 
-dotPositions.forEach(([x, y]) => {
-  const dot = document.createElement("div");
-  dot.className = "dot";
-  dot.style.left = `${x}vw`;
-  dot.style.top = `${y}vh`;
-  dot.onclick = () => {
-    webgazer.recordScreenPosition(
-      x * window.innerWidth / 100,
-      y * window.innerHeight / 100,
-      'click'
-    );
-    dot.remove();
-    clicks++;
-    if (clicks === dotPositions.length) {
-      calibrationDiv.style.display = "none";
-      isCalibrated = true;
-    }
-  };
-  dotsDiv.appendChild(dot);
-});
+// dotPositions.forEach(([x, y]) => {
+//   const dot = document.createElement("div");
+//   dot.className = "dot";
+//   dot.style.left = `${x}vw`;
+//   dot.style.top = `${y}vh`;
+//   dot.onclick = () => {
+//     webgazer.recordScreenPosition(
+//       x * window.innerWidth / 100,
+//       y * window.innerHeight / 100,
+//       'click'
+//     );
+//     dot.remove();
+//     clicks++;
+//     if (clicks === dotPositions.length) {
+//       calibrationDiv.style.display = "none";
+//       isCalibrated = true;
+//     }
+//   };
+//   dotsDiv.appendChild(dot);
+// });
 
-webgazer.setGazeListener((data) => {
-  if (!data || !isCalibrated) return;
+// webgazer.setGazeListener((data) => {
+//   if (!data || !isCalibrated) return;
 
-  const targetX = data.x;
-  const targetY = data.y;
-  ctx.lineWidth = brushSize;
+//   const targetX = data.x;
+//   const targetY = data.y;
+//   ctx.lineWidth = brushSize;
 
-  // Smooth the motion
-  smoothedX += (targetX - smoothedX) * smoothingFactor;
-  smoothedY += (targetY - smoothedY) * smoothingFactor;
+//   // Smooth the motion
+//   smoothedX += (targetX - smoothedX) * smoothingFactor;
+//   smoothedY += (targetY - smoothedY) * smoothingFactor;
 
-  gazeCursor.style.left = (smoothedX - 10) + "px";
-  gazeCursor.style.top = (smoothedY - 10) + "px";
+//   gazeCursor.style.left = (smoothedX - 10) + "px";
+//   gazeCursor.style.top = (smoothedY - 10) + "px";
 
-  const now = Date.now();
+//   const now = Date.now();
 
-  if (currentTool === "draw") {
-    if (now - lastDrawTime > drawCooldown) {
+//   if (currentTool === "draw") {
+//     if (now - lastDrawTime > drawCooldown) {
+//       ctx.strokeStyle = brushColor;
+//       ctx.lineCap = "round";
+//       ctx.beginPath();
+//       ctx.moveTo(lastX, lastY);
+//       ctx.lineTo(smoothedX, smoothedY);
+//       ctx.stroke();
+//       lastX = smoothedX;
+//       lastY = smoothedY;
+//       lastDrawTime = now;
+//     }
+//   } else if (currentTool === "erase") {
+//     ctx.globalCompositeOperation = 'destination-out';
+//     //ctx.clearRect(smoothedX - 10, smoothedY - 10, 20, 20);
+//     ctx.strokeStyle = brushColor;
+//     ctx.lineCap = "round";
+//     ctx.beginPath();
+//     ctx.moveTo(lastX, lastY);
+//     ctx.lineTo(smoothedX, smoothedY);
+//     ctx.stroke();
+//     lastX = smoothedX;
+//     lastY = smoothedY;
+//     lastDrawTime = now;
+//     ctx.globalCompositeOperation = 'source-over';
+//   }
+// }).begin();
+
+// webgazer.showVideoPreview(true);
+// webgazer.showPredictionPoints(false);
+// webgazer.showFaceOverlay(true);
+
+function onPoint(point,calibration){
+  point[0]; // x
+  point[1]; // y
+  calibration; // false - for calibrated data, true if calibration is ongoing
+  document.getElementById("log").textContent = calibration;
+
+  if (!calibration) {
+    const targetX = data.x;
+    const targetY = data.y;
+    ctx.lineWidth = brushSize;
+  
+    // Smooth the motion
+    smoothedX += (targetX - smoothedX) * smoothingFactor;
+    smoothedY += (targetY - smoothedY) * smoothingFactor;
+  
+    gazeCursor.style.left = (smoothedX - 10) + "px";
+    gazeCursor.style.top = (smoothedY - 10) + "px";
+  
+    const now = Date.now();
+  
+    if (currentTool === "draw") {
+      if (now - lastDrawTime > drawCooldown) {
+        ctx.strokeStyle = brushColor;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(smoothedX, smoothedY);
+        ctx.stroke();
+        lastX = smoothedX;
+        lastY = smoothedY;
+        lastDrawTime = now;
+      }
+    } else if (currentTool === "erase") {
+      ctx.globalCompositeOperation = 'destination-out';
       ctx.strokeStyle = brushColor;
       ctx.lineCap = "round";
       ctx.beginPath();
@@ -107,26 +177,14 @@ webgazer.setGazeListener((data) => {
       lastX = smoothedX;
       lastY = smoothedY;
       lastDrawTime = now;
+      ctx.globalCompositeOperation = 'source-over';
     }
-  } else if (currentTool === "erase") {
-    ctx.globalCompositeOperation = 'destination-out';
-    //ctx.clearRect(smoothedX - 10, smoothedY - 10, 20, 20);
-    ctx.strokeStyle = brushColor;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(smoothedX, smoothedY);
-    ctx.stroke();
-    lastX = smoothedX;
-    lastY = smoothedY;
-    lastDrawTime = now;
-    ctx.globalCompositeOperation = 'source-over';
   }
-}).begin();
+};
 
-webgazer.showVideoPreview(true);
-webgazer.showPredictionPoints(false);
-webgazer.showFaceOverlay(true);
+const gestures = new EyeGestures('video',onPoint);
+// gestures.invisible(); // to disable blue tracker
+gestures.start();
 
 function toggleBrushSizeDiv() {
   if (brushSizeContainer.style.display === "block") {
@@ -134,8 +192,4 @@ function toggleBrushSizeDiv() {
   } else {
     brushSizeContainer.style.display = "block";
   }
-}
-
-function changeBrushSize() {
-  
 }
