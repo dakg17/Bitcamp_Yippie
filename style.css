@@ -5,24 +5,48 @@ body {
   }
 
   #video {
-    position: absolute;
-    top: 0;
-    left: 0; 
-    border: 2px solid #000;
-}
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #999;
+    z-index: 4;
+  }
+
+  #layout {
+    display: flex;
+    height: 100vh;
+  }
+
+  #leftPanel {
+    width: 300px;
+    background-color: #383d3b;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-right: 1px solid #385551;
+  }
   
   #toolbar {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    padding: 8px;
-    border-radius: 10px;
     display: flex;
+    flex-direction: column;
     gap: 10px;
-    z-index: 10;
   }
+
+  #toolbar button {
+    padding: 10px;
+    font-size: 1.1rem;
+    background-color: #486862;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  #toolbar button:hover {
+    background-color: #2267c1;
+  }
+  
   
   #drawCanvas {
     position: absolute;
