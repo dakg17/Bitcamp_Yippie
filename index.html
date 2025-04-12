@@ -7,22 +7,30 @@
   <link rel="stylesheet" href="https://eyegestures.com/eyegestures.css">
 </head>
 <body>
-  <video id="video" width="640" height="480" autoplay></video>
-  <div id="status" style="display : none;">Initializing...</div>
-  <div id="error" style="display : none;"></div>
-  <div id="toolbar">
-    <button data-tool="draw">✏️</button>
-    <button data-tool="erase">🧽</button>
-    <button id="brushSizeButton">🖌️</button>
-    <button id="toggleDrawing">✋ Pause Drawing</button>
-    <div id="brushSizeContainer">
-      <label for="brushSize">Brush Size: </label>
-      <input type="range" id="brushSizeSlider" min="1" max="100" value="1">
-      <span id="brushSizeDisplay">1</span>
+  <div id="layout">
+    <div id="leftPanel">
+      <video id="video" width="640" height="480" autoplay></video>
+      <div id="status" style="display : none;">Initializing...</div>
+      <div id="error" style="display : none;"></div>
+      <div id="toolbar">
+        <button data-tool="draw">✏️</button>
+        <button data-tool="erase">🧽</button>
+        <button id="brushSizeButton">🖌️</button>
+        <button id="toggleDrawing">✋ Pause Drawing</button>
+        <div id="brushSizeContainer">
+          <label for="brushSize">Brush Size: </label>
+          <input type="range" id="brushSizeSlider" min="1" max="100" value="1">
+          <span id="brushSizeDisplay">1</span>
+        </div>
+        <input type="color" id="colorPicker" value="#000000" style = "width:auto;">
+        <button id="clear">🗑️ Clear</button>
+        <div id="log" style="display : none;"></div>
+      </div>
     </div>
-    <input type="color" id="colorPicker" value="#000000">
-    <button id="clear">🗑️ Clear</button>
-    <div id="log" style="display : none;"></div>
+
+    <div id="canvasContainer">
+      <canvas id="drawCanvas"></canvas>
+    </div>
   </div>
 
   <canvas id="drawCanvas"></canvas>
