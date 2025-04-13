@@ -16,6 +16,14 @@ body {
   height: 100vh;
 }
 
+#brushSizeText {
+  color: #ffffff
+}
+
+#brushSizeDisplay {
+  color: #ffffff
+}
+
 #leftPanel {
   width: 300px;
   background-color: #383d3b;
