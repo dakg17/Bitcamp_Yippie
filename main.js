@@ -2,6 +2,8 @@ const canvas = document.getElementById("drawCanvas");
 const ctx = canvas.getContext("2d");
 const colorPicker = document.getElementById("colorPicker");
 const clearBtn = document.getElementById("clear");
+const saveBtn = document.getElementById("save");
+const enhanceBtn = document.getElementById("enhance");
 const brushSizeBtn = document.getElementById("brushSizeButton");
 const brushSizeContainer = document.getElementById("brushSizeContainer");
 const brushSizeSlider = document.getElementById("brushSizeSlider");
@@ -51,6 +53,16 @@ document.querySelectorAll("[data-tool]").forEach(btn => {
 
 clearBtn.addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+saveBtn.addEventListener("click", () => { // Currently just takes the drawing and adds the image to the html document
+  canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "eye-sketch.png";
+    a.click();
+  });
 });
 
 brushSizeBtn.addEventListener("click", function () {

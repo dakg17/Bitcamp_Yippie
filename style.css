@@ -66,3 +66,12 @@ body {
   z-index: 5;
   opacity: 0.6;
 }
+
+#resultImage {
+  /*position: absolute;         /* Lets you place it freely on the page */
+  /*top: 10px;                  /* Pushes it 10px from the top of the screen */
+  /*right: 10px;                /* Pushes it 10px from the right edge */
+  max-width: 30%;            /* Keeps it responsive (never wider than 30% of screen) */
+  border: 2px solid #000;     /* Gives it a black border for visibility */
+  z-index: 999;               /* Makes sure it's above the canvas, video, etc. */
+}
