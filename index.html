@@ -17,13 +17,15 @@
         <button data-tool="erase">🧽</button>
         <button id="brushSizeButton">🖌️</button>
         <button id="toggleDrawing">✋ Pause Drawing</button>
-        <div id="brushSizeContainer">
-          <label for="brushSize" id="brushSizeText">Brush Size: </label>
+        <div id="brushSizeContainer" style="color: aliceblue;">
+          <label for="brushSize">Brush Size: </label>
           <input type="range" id="brushSizeSlider" min="1" max="100" value="1">
           <span id="brushSizeDisplay">1</span>
         </div>
         <input type="color" id="colorPicker" value="#000000" style = "width:auto;">
+        <button id="save">📁 Save</button>
         <button id="clear">🗑️ Clear</button>
+        <img id="resultImage" style="display: none;" />
         <div id="log" style="display : none;"></div>
       </div>
     </div>
@@ -32,8 +34,6 @@
       <canvas id="drawCanvas"></canvas>
     </div>
   </div>
-
-  <canvas id="drawCanvas"></canvas>
 
   <script src="https://www.lactame.com/lib/ml/6.0.0/ml.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
