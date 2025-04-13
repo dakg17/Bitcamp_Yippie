@@ -69,6 +69,14 @@ brushSizeBtn.addEventListener("click", function () {
   toggleBrushSizeDiv();
 });
 
+document.addEventListener("keydown", function(event) {
+  if (event.code === "Space") {
+    event.preventDefault(); // prevent scrolling
+    drawingEnabled = !drawingEnabled;
+    toggleDrawingBtn.textContent = drawingEnabled ? "✋ Pause Drawing" : "✅ Resume Drawing";
+  }
+});
+
 brushSizeSlider.addEventListener("change", (event) => {
   brushSize = event.target.value;
   brushSizeDisplay.textContent = brushSize;
